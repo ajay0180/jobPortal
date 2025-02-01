@@ -1,0 +1,6 @@
+# no env file to be pushed into the github repository...
+backend/config
+
+# no node_modules to be pushed into the github repository...
+client/node_modules
+backend/node_modules
