@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
         httpOnly: true,
         sameSite: "strict",
       })
-      .json({ message: `Welcome back ${user.fullname}.`, success: true });
+      .json({ message: `Welcome back ${user.fullname}.`, success: true, user });
   } catch (e) {
     console.log(e);
   }
