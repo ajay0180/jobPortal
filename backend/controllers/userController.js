@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const { getDataUri } = require("../utils/data_uri");
+const cloudinary = require("../utils/Cloudinary.js");
 
 exports.register = async (req, res) => {
   try {
@@ -105,8 +107,10 @@ exports.logout = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
+
     const file = req.file;
-    //cloudinary aayega idhar...
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     let skillsArray;
     if (skills) {
@@ -127,6 +131,12 @@ exports.updateProfile = async (req, res) => {
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
+
+    //resume saves here...
+    if (cloudResponse) {
+      user.profile.resume = cloudResponse.secure_url; //saves the cloudinary url
+      user.profile.resumeOriginalName = file.originalname; //saves the original name
+    }
 
     await user.save();
     user = {

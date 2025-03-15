@@ -8,6 +8,11 @@ const userRoutes = express.Router();
 userRoutes.post("/register", singleUpload, userController.register);
 userRoutes.post("/login", userController.login);
 userRoutes.get("/logout", userController.logout);
-userRoutes.post("/profile/update", protect, userController.updateProfile);
+userRoutes.post(
+  "/profile/update",
+  protect,
+  singleUpload,
+  userController.updateProfile
+);
 
 module.exports = userRoutes;
