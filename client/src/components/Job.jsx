@@ -4,8 +4,12 @@ import { Bookmark } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import appleLogo from "../assets/appleLogo.webp";
+import { useNavigate } from "react-router-dom";
 
 export const Job = () => {
+  const jobId = "12345";
+  const navigate = useNavigate();
+
   return (
     <div className="p-5 rounded-xl shadow-xl bg-white border border-gray-200">
       <div className="flex items-center justify-between">
@@ -54,7 +58,12 @@ export const Job = () => {
         </Badge>
       </div>
       <div className="flex items-center gap-4 mt-4">
-        <Button variant="outline">Details</Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate(`/description/${jobId}`)}
+        >
+          Details
+        </Button>
         <Button className="bg-[#a04fd5] text-white">Save for later</Button>
       </div>
     </div>
