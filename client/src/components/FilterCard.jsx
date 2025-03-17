@@ -3,11 +3,13 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 const filterData = [
   {
+    index: 1,
     FilterType: "Location",
     array: ["DelhiNCR", "Bengalore", "Mumbai", "Hyderabad", "Pune"],
   },
   {
-    FilterType: "Industry",
+    index: 2,
+    FilterType: "Domain",
     array: [
       "Frontend Developer",
       "Backend Developer",
@@ -19,8 +21,9 @@ const filterData = [
     ],
   },
   {
+    index: 3,
     FilterType: "Salary",
-    array: ["0-40k", "40k-1lac", "1lac-5lac"],
+    array: ["50k-1lac", "1lac-1.75lac", "2lac-5lac"],
   },
 ];
 
@@ -30,13 +33,13 @@ export const FilterCard = () => {
       <h1 className="font-bold text-lg">Filter Jobs</h1>
       <hr className="mt-3" />
       <RadioGroup>
-        {filterData.map((data, ind) => (
-          <div key={ind}>
+        {filterData.map((data) => (
+          <div key={data.index}>
             <h1 className="font-bold pt-2">{data.FilterType}</h1>
-            {data.array.map((el, ind) => {
+            {data.array.map((el, index) => {
               return (
-                <div className="flex items-center space-x-2 my-2">
-                  <RadioGroupItem key={ind} value={el} />
+                <div className="flex items-center space-x-2 my-2" key={index}>
+                  <RadioGroupItem value={el} id={el} />
                   <label htmlFor={el}>{el}</label>
                 </div>
               );

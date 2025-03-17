@@ -2,11 +2,33 @@ import { LogOut, User2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "@/utils/constant";
+import { setUser } from "@/redux/authSlice";
 
 export default function NavBar() {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_ENDPOINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -44,7 +66,7 @@ export default function NavBar() {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src="https://github.com/shadcn.png"
+                    src={user?.profile?.profilePhoto}
                     alt="@shadcn"
                   />
                   <AvatarFallback>CN</AvatarFallback>
@@ -54,14 +76,14 @@ export default function NavBar() {
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="https://github.com/shadcn.png"
+                      src={user?.profile?.profilePhoto}
                       alt="@shadcn"
                     />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium ">Ajay kumar</h4>
+                    <h4 className="font-medium ">{user?.fullname}</h4>
                     <p className="text-xs text-muted-foreground">
-                      Lorem ipsum dolor sit amet.
+                      {user?.profile?.bio}
                     </p>
                   </div>
                 </div>
@@ -74,7 +96,9 @@ export default function NavBar() {
                   </div>
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <LogOut />
-                    <Button variant="link">Logout</Button>
+                    <Button variant="link" onClick={logoutHandler}>
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>

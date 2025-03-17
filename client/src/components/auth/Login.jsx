@@ -38,7 +38,6 @@ export const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log(res.data);
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");

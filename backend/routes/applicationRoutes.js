@@ -10,7 +10,7 @@ const {
 const applicationRoutes = express.Router();
 
 applicationRoutes.use(protect);
-applicationRoutes.post("/apply/:id", applyJob);
+applicationRoutes.get("/apply/:id", applyJob);
 applicationRoutes.get("/get", getAppliedJobs);
 applicationRoutes.get("/:id/applicants", getApplicants);
 applicationRoutes.post("/status/:id/update", updateStatus);

@@ -13,6 +13,12 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ message: "Something is missing", success: false });
     }
+
+    //this is used to store the profile photo of the user...
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -28,6 +34,9 @@ exports.register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
 
     return res
@@ -109,12 +118,17 @@ exports.updateProfile = async (req, res) => {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
 
     const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    if (req.file) {
+      const fileUri = getDataUri(file);
+      var cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
 
     let skillsArray;
     if (skills) {
       skillsArray = skills.split(",");
+      skillsArray = skillsArray.filter((str) => {
+        return str.trim().length > 0;
+      });
     }
     const userId = req.id;
     let user = await User.findById(userId);

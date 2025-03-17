@@ -101,7 +101,7 @@ export const Signup = () => {
             <Label>Phone number</Label>
             <Input
               type="tel"
-              placeholder="1234567890"
+              placeholder="8888888888"
               maxLength={10}
               value={input.phoneNumber}
               name="phoneNumber"
