@@ -3,12 +3,10 @@ import { Button } from "./ui/button";
 import { Bookmark } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import appleLogo from "../assets/appleLogo.webp";
 import { useNavigate } from "react-router-dom";
 
 export const Job = ({ job }) => {
   const navigate = useNavigate();
-  const daysAgo = null;
 
   const daysAgoFunction = (mongoDBTime) => {
     const createdAt = new Date(mongoDBTime);

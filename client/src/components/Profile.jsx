@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "./shared/NavBar";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import appleLogo from "../assets/appleLogo.webp";
 import { Contact, Mail, Pen } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -9,10 +8,12 @@ import { Label } from "./ui/label";
 import { AppliedJobTable } from "./AppliedJobTable";
 import { UpdateProfileDialog } from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import { useGetAppliedJobs } from "@/hooks/useGetAppliedJobs";
+import defaultPhoto from "../assets/defaultProfile.png";
 
-const skills = ["HTML", "css", "Javascript", "ReactJs"];
 const isResume = true;
 export const Profile = () => {
+  useGetAppliedJobs();
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
@@ -23,7 +24,10 @@ export const Profile = () => {
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={appleLogo} className="object-contain" />
+              <AvatarImage
+                src={user?.profile?.profilePhoto || defaultPhoto}
+                className="object-contain"
+              />
             </Avatar>
             <div>
               <h1 className="font-medium text-xl">{user?.fullname}</h1>

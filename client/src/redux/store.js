@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
 import jobSlice from "./jobSlice";
 import companySlice from "./companySlice";
+import applicationSlice from "./applicationSlice";
 
 //redux-persist is used to persist the fetched result in the redux-slices ,created by developers...
 import {
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   auth: authSlice,
   jobs: jobSlice,
   company: companySlice,
+  application: applicationSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

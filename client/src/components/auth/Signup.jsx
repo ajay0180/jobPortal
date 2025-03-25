@@ -4,7 +4,7 @@ import { Button } from "../ui/button.jsx";
 import { Input } from "../ui/input.jsx";
 import { Label } from "../ui/label.jsx";
 import { RadioGroup } from "../ui/radio-group.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "../../utils/constant.js";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ import { Loader2 } from "lucide-react";
 export const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
 
   const [input, setInput] = useState({
     fullname: "",
@@ -65,6 +65,12 @@ export const Signup = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div>

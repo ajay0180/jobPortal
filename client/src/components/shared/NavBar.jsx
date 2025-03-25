@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "@/utils/constant";
 import { setUser } from "@/redux/authSlice";
+import defaultPhoto from "../../assets/defaultProfile.png";
 
 export default function NavBar() {
   const { user } = useSelector((store) => store.auth);
@@ -79,7 +80,7 @@ export default function NavBar() {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src={user?.profile?.profilePhoto}
+                    src={user?.profile?.profilePhoto || defaultPhoto}
                     alt="@shadcn"
                   />
                   <AvatarFallback>CN</AvatarFallback>
@@ -89,7 +90,7 @@ export default function NavBar() {
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src={user?.profile?.profilePhoto}
+                      src={user?.profile?.profilePhoto || defaultPhoto}
                       alt="@shadcn"
                     />
                   </Avatar>

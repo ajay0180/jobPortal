@@ -14,7 +14,7 @@ export const LatestJobs = () => {
         {allJobs &&
           allJobs
             ?.slice(0, 6)
-            .map((job, ind) => <LatestJobCards key={job._id} job={job} />)}
+            .map((job) => <LatestJobCards key={job._id} job={job} />)}
       </div>
     </div>
   );
